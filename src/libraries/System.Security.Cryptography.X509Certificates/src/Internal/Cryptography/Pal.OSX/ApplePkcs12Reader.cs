@@ -16,7 +16,17 @@ namespace Internal.Cryptography.Pal
     {
         internal ApplePkcs12Reader(ReadOnlySpan<byte> data)
         {
-            ParsePkcs12(data);
+            try
+            {
+                ParsePkcs12(data);
+            }
+            catch (Exception)
+            {
+                // ParsePkcs12 could throw an exception
+                // after allocating some resources
+                Dispose();
+                throw;
+            }
         }
 
         protected override ICertificatePalCore ReadX509Der(ReadOnlyMemory<byte> data)
