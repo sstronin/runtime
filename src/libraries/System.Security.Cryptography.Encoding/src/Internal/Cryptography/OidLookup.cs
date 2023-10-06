@@ -80,7 +80,7 @@ namespace Internal.Cryptography
 
             mappedOid = NativeFriendlyNameToOid(friendlyName, oidGroup, fallBackToAllGroups);
 
-            if (shouldUseCache)
+            if (shouldUseCache && mappedOid != null)
             {
                 s_lateBoundFriendlyNameToOid.TryAdd(friendlyName, mappedOid);
 
